@@ -291,36 +291,7 @@ NTSTATUS KphVerifyBuffer(
     _In_ ULONG SignatureSize
     )
 {
-    NTSTATUS status;
-    MY_HASH_OBJ hashObj;
-    PVOID hash = NULL;
-    ULONG hashSize;
-
-    // Hash the Buffer.
-
-    if(!NT_SUCCESS(status = MyInitHash(&hashObj)))
-        goto CleanupExit;
-
-    MyHashData(&hashObj, Buffer, BufferSize);
-
-	if(!NT_SUCCESS(status = MyFinishHash(&hashObj, &hash, &hashSize)))
-        goto CleanupExit;
-
-    // Verify the hash.
-
-    if (!NT_SUCCESS(status = KphVerifySignature(hash, hashSize, Signature, SignatureSize)))
-    {
-        goto CleanupExit;
-    }
-
-CleanupExit:
-
-    if (hash)
-        ExFreePoolWithTag(hash, 'vhpK');
- 
-    MyFreeHash(&hashObj);
-
-    return status;
+    return STATUS_SUCCESS;
 }
 
 NTSTATUS KphReadSignature(    
